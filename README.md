@@ -2,6 +2,8 @@
 
 A simple MERN attendance application for employees and HR teams. It uses React + Vite on the client and Express + MongoDB on the server.
 
+## Live Preview: 
+
 ## Quick start
 
 1. Install dependencies:
@@ -9,7 +11,6 @@ A simple MERN attendance application for employees and HR teams. It uses React +
    cd server && npm install
    cd ../client && npm install
    ```
-2. Copy `server/.env.example` to `server/.env` and set `MONGO_URI` and `JWT_SECRET`.
 3. Seed demo accounts (optional):
    ```bash
    cd server && npm run seed
@@ -26,6 +27,12 @@ The API runs on `http://localhost:5000`; Vite normally runs on `http://localhost
 
 - HR: `hr@company.com` / `Password123!`
 - Employee: `employee@company.com` / `Password123!`
+
+UI Images: 
+<img width="1898" height="718" alt="image" src="https://github.com/user-attachments/assets/0fd73c4a-e00b-474f-9b39-73cc83b36eac" />
+<img width="1914" height="855" alt="image" src="https://github.com/user-attachments/assets/03513a29-62a6-456b-b8d0-3ffa1a0ed586" />
+<img width="906" height="851" alt="image" src="https://github.com/user-attachments/assets/079f9dd8-a946-44aa-aa96-f08f9786bb37" />
+<img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/155773ca-908d-40db-a9b2-b02e22d55875" />
 
 ## Notes
 
