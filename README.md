@@ -9,7 +9,6 @@ A simple MERN attendance application for employees and HR teams. It uses React +
    cd server && npm install
    cd ../client && npm install
    ```
-2. Copy `server/.env.example` to `server/.env` and set `MONGO_URI` and `JWT_SECRET`.
 3. Seed demo accounts (optional):
    ```bash
    cd server && npm run seed
