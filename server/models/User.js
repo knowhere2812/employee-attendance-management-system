@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema(
     joiningDate: { type: Date, default: Date.now },
     leaveBalance: { type: Number, default: 20, min: 0 },
     isActive: { type: Boolean, default: true },
+    refreshTokenHash: { type: String, select: false },
+    refreshTokenExpiresAt: { type: Date, select: false },
   },
   { timestamps: true },
 );

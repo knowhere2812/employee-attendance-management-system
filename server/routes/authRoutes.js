@@ -1,6 +1,12 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { login, me, register } from "../controllers/authController.js";
+import {
+  login,
+  logout,
+  me,
+  refresh,
+  register,
+} from "../controllers/authController.js";
 import { protect } from "../middleware/authMiddleware.js";
 const r = Router();
 const creds = [
@@ -35,4 +41,6 @@ r.post(
   login,
 );
 r.get("/me", protect, me);
+r.post("/refresh", refresh);
+r.post("/logout", protect, logout);
 export default r;
