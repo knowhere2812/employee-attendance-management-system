@@ -18,7 +18,7 @@ import {
 function Protected({ role, children }) {
   const { user, loading } = useAuth();
   if (loading) return <Loading />;
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/sign-in" replace />;
   if (role && user.role !== role)
     return <Navigate to={user.role === "hr" ? "/hr" : "/employee"} replace />;
   return <Layout>{children}</Layout>;
