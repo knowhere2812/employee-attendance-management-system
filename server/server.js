@@ -13,6 +13,13 @@ import hrRoutes from "./routes/hrRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
+let databaseConnected = false;
+
+const connectDatabase = async () => {
+  if (databaseConnected) return;
+  await mongoose.connect(process.env.MONGO_URI);
+  databaseConnected = true;
+};
 
 if (process.env.DNS_SERVERS) {
   dns.setServers(
@@ -35,6 +42,14 @@ app.use(
 );
 app.use(express.json({ limit: "10kb" }));
 app.use(morgan("dev"));
+app.use(async (req, res, next) => {
+  try {
+    await connectDatabase();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 app.use(
   "/api",
   rateLimit({
@@ -53,10 +68,13 @@ app.use(notFound);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => app.listen(port, () => console.log(`Server running on ${port}`)))
-  .catch((error) => {
+if (!process.env.VERCEL) {
+  connectDatabase()
+    .then(() => app.listen(port, () => console.log(`Server running on ${port}`)))
+    .catch((error) => {
     console.error("Database connection failed:", error.message);
     process.exit(1);
-  });
+    });
+}
+
+export default app;

@@ -23,6 +23,20 @@ A simple MERN attendance application for employees and HR teams. It uses React +
 
 The API runs on `http://localhost:5000`; Vite normally runs on `http://localhost:5173`.
 
+## Vercel deployment
+
+Deploy this repository as two Vercel projects:
+
+- Backend: set the project root to `server`. The included `server/vercel.json` exposes the Express API.
+- Frontend: set the project root to `client` and use the Vite framework preset.
+
+Set these production environment variables:
+
+- Backend: `MONGO_URI`, `JWT_SECRET`, `JWT_REFRESH_SECRET`, and `CLIENT_URL` set to the deployed frontend URL.
+- Frontend: `VITE_API_URL` set to the deployed backend URL ending in `/api`.
+
+After deployment, the frontend calls the backend through `VITE_API_URL`, and the backend only accepts browser requests from `CLIENT_URL`.
+
 ## Demo accounts
 
 - HR: `hr@company.com` / `Password123!`
