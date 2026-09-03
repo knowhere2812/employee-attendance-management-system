@@ -1,0 +1,10 @@
+import { Router } from 'express'; 
+import { checkIn, checkOut, history, today } from '../controllers/attendanceController.js'; 
+import { protect, allowRoles } from '../middleware/authMiddleware.js'; 
+const r = Router(); 
+r.use(protect, allowRoles('employee')); 
+r.post('/check-in', checkIn); 
+r.post('/check-out', checkOut); 
+r.get('/today', today); 
+r.get('/my-history', history); 
+export default r;
