@@ -34,7 +34,13 @@ const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
 app.use(helmet());
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (requestOrigin, callback) => {
+      if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
