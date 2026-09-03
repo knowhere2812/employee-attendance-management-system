@@ -66,8 +66,7 @@ export const history = async (req, res, next) => {
     const page = Math.max(1, Number(req.query.page) || 1);
     const limit = Math.min(50, Number(req.query.limit) || 20);
     const filter = { employee: req.user._id };
-    c;
-    onst[(attendance, total)] = await Promise.all([
+    const [attendance, total] = await Promise.all([
       Attendance.find(filter)
         .sort({ date: -1 })
         .skip((page - 1) * limit)
