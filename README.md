@@ -2,7 +2,7 @@
 
 A simple MERN attendance application for employees and HR teams. It uses React + Vite on the client and Express + MongoDB on the server.
 
-## Live Preview:
+## Live Preview:https://employee-attendance-management-syst-zeta.vercel.app/
 
 ## Quick start
 
