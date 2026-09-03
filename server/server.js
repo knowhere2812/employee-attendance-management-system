@@ -13,12 +13,22 @@ import hrRoutes from "./routes/hrRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
-let databaseConnected = false;
+let databaseConnection;
 
 const connectDatabase = async () => {
-  if (databaseConnected) return;
-  await mongoose.connect(process.env.MONGO_URI);
-  databaseConnected = true;
+  if (!process.env.MONGO_URI) {
+    throw new Error("MONGO_URI is not configured");
+  }
+  if (mongoose.connection.readyState === 1) return;
+  if (!databaseConnection) {
+    databaseConnection = mongoose
+      .connect(process.env.MONGO_URI)
+      .catch((error) => {
+        databaseConnection = undefined;
+        throw error;
+      });
+  }
+  await databaseConnection;
 };
 
 if (process.env.DNS_SERVERS) {
@@ -31,11 +41,18 @@ if (process.env.DNS_SERVERS) {
 const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
   .split(",")
   .map((origin) => origin.trim())
-  .filter(Boolean);
+  .filter(Boolean)
+  .map((origin) => origin.replace(/\/$/, ""));
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (requestOrigin, callback) => {
+      if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
