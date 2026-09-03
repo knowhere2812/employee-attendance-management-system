@@ -70,10 +70,12 @@ app.use(errorHandler);
 const port = process.env.PORT || 5000;
 if (!process.env.VERCEL) {
   connectDatabase()
-    .then(() => app.listen(port, () => console.log(`Server running on ${port}`)))
+    .then(() =>
+      app.listen(port, () => console.log(`Server running on ${port}`)),
+    )
     .catch((error) => {
-    console.error("Database connection failed:", error.message);
-    process.exit(1);
+      console.error("Database connection failed:", error.message);
+      process.exit(1);
     });
 }
 
